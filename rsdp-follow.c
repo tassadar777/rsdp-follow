@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <fcntl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 struct RSDP_t {
  char Signature[8];
@@ -135,6 +136,8 @@ void dump_table(int fd,off_t offset)
 error:
 	if(p!=NULL)
 		free(p);
+	if(!errno)
+		errno=5;
 	perror(NULL);
 }
 
@@ -252,6 +255,8 @@ exit:
 error:
 	if(pheader!=NULL)
 		free(pheader);
+	if(!errno)
+		errno=5;
 	perror(NULL);
 usage:
 	return 1;
