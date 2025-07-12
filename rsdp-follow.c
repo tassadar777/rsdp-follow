@@ -114,7 +114,8 @@ void dump_table(int fd,off_t offset)
 		goto error;
 	for(i=0;i<4;++i)
 		name[i]=h.Signature[i];
-	strncat(name+4,".tbl",sizeof(name)-1);
+	name[4]=0;
+	strncat(name,".tbl",sizeof(name)-1);
 	printf("Checksum correct for %s of size %d\n",name,h.Length);
 
 	outfd=open(name,O_CREAT|O_WRONLY,0644);
