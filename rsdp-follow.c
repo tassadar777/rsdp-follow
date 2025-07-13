@@ -214,9 +214,11 @@ void dump_table(int fd,off_t offset)
 		struct FADT *fp;
 		uint64_t dsdtp;
 
-		printf("FASP found, trying to fetch DSDT...\n");
 		fp=(struct FADT*) p;
-		dsdtp= (uint64_t) fp->Dsdt;
+		dsdtp=fp->X_Dsdt;
+		if(!dsdtp) //if no 64 bit DSDP pointer
+			dsdtp=(uint64_t) fp->Dsdt;
+		printf("FACP found, trying to fetch DSDT at %lx...\n",dsdtp);
 		dump_table(fd,dsdtp);
 	}
 
